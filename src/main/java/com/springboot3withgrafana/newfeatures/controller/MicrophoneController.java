@@ -4,6 +4,7 @@ import com.springboot3withgrafana.newfeatures.dto.DrumMics;
 import com.springboot3withgrafana.newfeatures.service.MicrophoneService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,5 +20,10 @@ public class MicrophoneController {
     @GetMapping("/all")
     public List<DrumMics> getAllMics() {
         return microphoneService.getAllDrumMics();
+    }
+
+    @GetMapping("/{id}")
+    public DrumMics getMicrophone(@PathVariable Integer id) {
+        return microphoneService.getDrumMics(id);
     }
 }
