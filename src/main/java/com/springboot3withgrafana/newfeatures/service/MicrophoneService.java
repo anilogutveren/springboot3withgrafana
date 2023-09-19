@@ -1,6 +1,9 @@
 package com.springboot3withgrafana.newfeatures.service;
 
 import com.springboot3withgrafana.newfeatures.dto.DrumMics;
+import io.micrometer.observation.Observation;
+import io.micrometer.observation.ObservationRegistry;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -8,6 +11,9 @@ import java.util.List;
 
 @Service
 public class MicrophoneService {
+
+    @Autowired
+    private ObservationRegistry observationRegistry;
 
     List<DrumMics> drumMicsList = new ArrayList<>();
 
@@ -21,7 +27,8 @@ public class MicrophoneService {
                 "Shure SM81",
                 "Shure SM81"));
 
-        return drumMicsList;
+        return Observation.createNotStarted("getAllDrumMics", observationRegistry)
+                .observe(() -> drumMicsList);
     }
 
     public DrumMics getDrumMics(Integer id) {
@@ -34,10 +41,13 @@ public class MicrophoneService {
                 "Shure SM81",
                 "Shure SM81"));
 
-        return drumMicsList
-                .stream()
-                .filter(drumMics -> drumMics.id().equals(id))
-                .findFirst().
-                orElseThrow(() -> new RuntimeException("No mic found"));
+
+        return Observation.createNotStarted("getDrumMics", observationRegistry)
+                .observe(() -> drumMicsList
+                        .stream()
+                        .filter(drumMics -> drumMics.id().equals(id))
+                        .findFirst().
+                        orElseThrow(() -> new RuntimeException("No mic found")));
     }
 }
+
