@@ -2,7 +2,9 @@ package com.springboot3withgrafana.newfeatures.service;
 
 import com.springboot3withgrafana.newfeatures.dto.DrumMics;
 import io.micrometer.observation.Observation;
+
 import io.micrometer.observation.ObservationRegistry;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Slf4j
 public class MicrophoneService {
 
     @Autowired
@@ -27,6 +30,7 @@ public class MicrophoneService {
                 "Shure SM81",
                 "Shure SM81"));
 
+        log.info("Fetching all drum mics");
         return Observation.createNotStarted("getAllDrumMics", observationRegistry)
                 .observe(() -> drumMicsList);
     }
@@ -41,7 +45,7 @@ public class MicrophoneService {
                 "Shure SM81",
                 "Shure SM81"));
 
-
+        log.info("Fetching drum mics by id");
         return Observation.createNotStarted("getDrumMics", observationRegistry)
                 .observe(() -> drumMicsList
                         .stream()

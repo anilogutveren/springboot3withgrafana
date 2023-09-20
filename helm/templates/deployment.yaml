@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: monitoringapp
+  namespace: monitoring
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: monitoringapp
+  template:
+    metadata:
+      labels:
+        app: monitoringapp
+    spec:
+      containers:
+        - name: monitoringapp
+          image: anilogutveren/springappmonitoring:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+
