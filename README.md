@@ -17,6 +17,7 @@ docker image build -t anilogutveren/springappmonitoring:latest .
 ```
 
 I pushed it to remote docker hub. You can use it directly.
+
 ![img_1.png](img_1.png)
 
 Deploy the spring boot application to kubernetes cluster
@@ -32,6 +33,9 @@ Optional: Test the container locally
 docker container run -p 8080:8080 --name monitoringapp springappmonitoring
 ```
 ## How to observe with actuator
+Make some calls to endpoints firstly --> http://localhost:8080/microphone/all
+    
+Then go to http://localhost:8080/actuator/metrics/getAllDrumMics
 
 ![img.png](img.png)
 
